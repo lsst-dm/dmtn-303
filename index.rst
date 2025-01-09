@@ -44,6 +44,8 @@ Each of the pieces of missing functionality introduced above is described in gre
 This technote is explicitly not about so-called "user batch" services, for which the architecture is still too uncertain to design against.
 It does reference user batch in a few places where commonalities are clear.
 
+:cite:`DMTN-283` and :cite:`DMTN-297` both discuss a number of options for writeable science user data repositories, but do not select between them; this technote combines a few of those those options into a complete proposal with a viable development sequence, at least for the early science period.
+
 Minimum Viable Satellite Butlers
 ================================
 
@@ -129,6 +131,7 @@ More efficient options in which the server pulls the content from the personal d
 The publishing mechanism is probably something we should try to share with any future user-batch implementation in which user-generated data products land in a butler data repository, regardless of whether that data repository is the same RSP personal data repository this technote describes.
 
 We ultimately want the publishing system to support multiple levels of access control, in which users or groups retain ownership of the datasets and collections they have published, and can grant access to other users and groups instead of making them world-readable.
+While the authorization model described in :cite:`DMTN-182` assumed a more centralized approach to supporting science user Butler write operations that we no longer consider viable, its description of how to manage ownership and access control still seems appropriate.
 These access controls need to be implemented in the ``RemoteButler`` server (queries should not return datasets a user does not have access to) and the URL signing server.
 Where to store permission state like access control lists - in the ``RemoteButler`` database vs. a separate one - is an open question.
 
@@ -157,3 +160,8 @@ This is at least similar to the functionality needed for user and group ownershi
 
 As noted earlier, personal object storage works best when paired with personal PostgreSQL database space rather than a SQLite database.
 At the very least, the SQLite database itself cannot be accessed through object storage (POSIX filesystem access is required), and maintaining consistency between database and file storage will be easier if both are on the RSP filesystem or both are more centrally managed.
+
+References
+==========
+
+ .. bibliography::
